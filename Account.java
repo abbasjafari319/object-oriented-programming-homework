@@ -1,77 +1,71 @@
-package accounttest;
+package chapter9;
 
 import java.util.Date;
 
 public class Account {
-    
-    private int id;
-    private double balance;
-    private double annualInterestRate;
+    private int id=0;
+    private double balance=0;
+    private double annualInterestRate=0;
     private Date dateCreated;
+    public Account(){
+}
 
-    // No-arg constructor
-    public Account() {
-        this.id = 0;
-        this.balance = 0.0;
-        this.annualInterestRate = 0.0;
-        this.dateCreated = new Date();
+    public Account(int id , double balance) {
+        Date d=new Date();
+       this.id=id;
+       this.balance=balance;
     }
-
-    // Constructor with specified id and initial balance
-    public Account(int id, double balance) {
-        this.id = id;
-        this.balance = balance;
-        this.annualInterestRate = 0.0;
-        this.dateCreated = new Date();
-    }
-
-    // Accessor methods for id, balance, and annualInterestRate
-    public int getId() {
-        return id;
-    }
-
     public void setId(int id) {
         this.id = id;
-    }
-
-    public double getBalance() {
-        return balance;
     }
 
     public void setBalance(double balance) {
         this.balance = balance;
     }
 
-    public double getAnnualInterestRate() {
-        return annualInterestRate;
-    }
-
     public void setAnnualInterestRate(double annualInterestRate) {
-        this.annualInterestRate = annualInterestRate / 100;
+        this.annualInterestRate = annualInterestRate;
     }
 
-    // Accessor method for dateCreated
+    public int getId() {
+        return id;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
     public Date getDateCreated() {
         return dateCreated;
     }
 
-    // Method to get monthly interest rate
-    public double getMonthlyInterestRate() {
-        return annualInterestRate / 12;
+    public double getAnnualInterestRate() {
+        return annualInterestRate;
     }
-
-    // Method to withdraw money from the account
-    public void withdraw(double amount) {
-        if (amount <= balance) {
-            balance -= amount;
-        } else {
-            System.out.println("Insufficient funds.");
-        }
-    }
-
-    // Method to deposit money into the account
-    public void deposit(double amount) {
-        balance += amount;
     
+    public double getMonthlyInterestRate(){
+        return (annualInterestRate/12);
     }
+    
+    public void withdraw(double withdraw){
+       balance=balance-withdraw;
+    }
+    
+    public void deposit(double deposit){
+        balance=balance+deposit;
+    }
+    
+    
+     public static void main(String[] args) {
+         Account acc=new Account(1221, 20000);
+         acc.setAnnualInterestRate(4.5);
+         acc.withdraw(2500);
+         acc.deposit(3000);
+         
+         System.out.println("balance"+acc.getBalance());
+         System.out.println("monthly interest "+acc.getMonthlyInterestRate());
+     
+         
+         
+     }
 }
