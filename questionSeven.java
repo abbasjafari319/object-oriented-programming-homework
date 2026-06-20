@@ -1,24 +1,68 @@
-
-package unit.seven;
-
-import java.util.Random;
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package unit.eigth;
+import java.util.Scanner;
+/**
+ *
+ * @author AJ
+ */
 public class questionSeven {
     public static void main(String[] args){
-        // Array to store counts of digits from 0 to 9
-        int[] counts = new int[10];
+        Scanner scanner = new Scanner(System.in);
+        double[][] points = {{-1, 0, 3}, {-1, -1, -1}, {4, 1, 1},
+                            {2, 0.5, 9}, {3.5, 2, -1}, {3, 1.5, 3},
+                            {-1.5, 4, 2}, {5.5, 4, -0.5}};
 
-        // Generate 100 random integers between 0 and 9
-        Random random = new Random();
-        for (int i = 0; i < 100; i++) {
-            int number = random.nextInt(10);
-            counts[number]++;
-        }
+        double[] nearestPoint1 = findNearestPoints(points)[0];
+        double[] nearestPoint2 = findNearestPoints(points)[1];
 
-        // Display the counts
-        System.out.println("Counts of each digit from 0 to 9:");
-        for (int i = 0; i < 10; i++) {
-            System.out.println(i + ": " + counts[i]);
-        }
+        System.out.println("Nearest points:");
+        System.out.println("Point 1: (" + nearestPoint1[0] + ", " + nearestPoint1[1] + ", " + nearestPoint1[2] + ")");
+        System.out.println("Point 2: (" + nearestPoint2[0] + ", " + nearestPoint2[1] + ", " + nearestPoint2[2] + ")");
     }
+
+    public static double[][] findNearestPoints(double[][] points) {
+        if (points == null || points.length < 2) {
+            throw new IllegalArgumentException("At least two points are required.");
+        }
+
+        int numPoints = points.length;
+        double[][] distances = new double[numPoints][numPoints];
+        for (int i = 0; i < numPoints; i++) {
+            for (int j = i + 1; j < numPoints; j++) {
+                distances[i][j] = calculateDistance(points[i], points[j]);
+                distances[j][i] = distances[i][j]; // Ensure the matrix is symmetric
+            }
+        }
+
+        int minIndex = 0;
+        for (int i = 1; i < numPoints; i++) {
+            if (distances[minIndex][i] > distances[i][minIndex]) {
+                minIndex = i;
+            }
+        }
+
+        double[] nearestPoint1 = points[minIndex];
+        int secondMinIndex = -1;
+        for (int i = 0; i < numPoints; i++) {
+            if (distances[minIndex][i] == distances[i][minIndex]) {
+                if (secondMinIndex == -1 || distances[secondMinIndex][i] > distances[minIndex][i]) {
+                    secondMinIndex = i;
+                }
+            }
+        }
+
+        double[] nearestPoint2 = points[secondMinIndex];
+        return new double[][]{{nearestPoint1}, {nearestPoint2}};
+    }
+
+    public static double calculateDistance(double[] p1, double[] p2) {
+        return Math.sqrt(Math.pow(p2[0] - p1[0], 2) + Math.pow(p2[1] - p1[1], 2) + Math.pow(p2[2] - p1[2], 2));        
+    
+    
+    }
+    
 }

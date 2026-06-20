@@ -1,50 +1,65 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package unit.eigth;
 
-package unit.seven;
-
+import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ *
+ * @author AJ
+ */
 public class questionFour {
-    public static void main(String[] args){
-         // Initialize variables to store the total sum of scores, count of positive scores, and count of negative scores
-        int totalSum = 0;
-        int countPositiveScores = 0;
-        int countNegativeScores = 0;
-        Scanner input = new Scanner(System.in);
+     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+         // Sample data: weekly hours for eight employees
+        int[][] weeklyHours = {
+            {2, 4, 3, 4, 5, 8, 8},
+            {7, 3, 4, 3, 3, 4, 4},
+            {3, 3, 4, 3, 3, 2, 2},
+            {9, 3, 4, 7, 3, 4, 1},
+            {3, 5, 4, 3, 6, 3, 8},
+            {3, 4, 4, 6, 3, 4, 4},
+            {3, 7, 4, 8, 3, 8, 4},
+            {6, 3, 5, 9, 2, 7, 9}
+        };
 
-        // Read scores until a negative number is entered
-        while (true) {
-            int score = input.nextInt();
-            if (score < 0) {
-                break; // Exit the loop when a negative number is read
+        // Compute the total hours for each employee
+        int[] totalHours = new int[weeklyHours.length];
+
+        for (int i = 0; i < weeklyHours.length; i++) {
+            int sum = 0;
+            for (int j = 0; j < weeklyHours[i].length; j++) {
+                sum += weeklyHours[i][j];
             }
-
-            totalSum += score;
-            countPositiveScores++; // Increment count for positive scores
-
-            // Continue reading until a negative number is read
+            totalHours[i] = sum;
         }
 
-        // Calculate the average of the scores
-        double average = (double) totalSum / countPositiveScores;
-
-        // Display the results
-        System.out.println("Total sum of scores: " + totalSum);
-        System.out.println("Count of positive scores: " + countPositiveScores);
-        System.out.println("Average score: " + average);
-
-        // Determine how many scores are above or equal to the average and how many are below the average
-        int countAboveOrEqual = 0;
-        int countBelowAverage = 0;
-        for (int i = 1; i <= 100; i++) {
-            if (i >= average) {
-                countAboveOrEqual++;
-            } else if (i < average) {
-                countBelowAverage++;
+        // Custom comparator to sort in descending order
+        Comparator<int[]> reverseOrderComparator = (a, b) -> {
+            if (b[0] == a[0]) {
+                return 0;
+            } else {
+                return b[0] - a[0];
             }
+        };
+
+        // Sort the employees by their total hours in descending order
+        Arrays.sort(totalHours, reverseOrderComparator);
+
+        // Display the sorted list of employees and their total hours
+        System.out.println("Employees sorted by total hours:");
+        for (int i = 0; i < weeklyHours.length && i < totalHours.length; i++) {
+            int employeeId = i;
+            String employeeName = "Employee " + employeeId;
+            double totalHoursForEmployee = totalHours[i];
+            System.out.println(employeeName + ": " + totalHoursForEmployee);
         }
 
-        System.out.println("Count of scores above or equal to the average: " + countAboveOrEqual);
-        System.out.println("Count of scores below the average: " + countBelowAverage);
-  
-    }
+
+     
+    
 }

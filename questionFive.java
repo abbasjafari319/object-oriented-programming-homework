@@ -1,47 +1,60 @@
-
-package unit.seven;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package unit.eigth;
 
 import java.util.Scanner;
 
+/**
+ *
+ * @author AJ
+ */
 public class questionFive {
-    public static void main(String[] args){
-        // Initialize an array to store distinct numbers
-        int[] distinctNumbers = new int[10];
-        int countDistinct = 0;
-        Scanner input = new Scanner(System.in);
+     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // Example matrices
+        double[][] matrixA = {{1, 2},
+                                         {3, 4}};
+        
+        double[][] matrixB = {{5, 6}, 
+                                         {7, 8}};
 
-        // Read the first number
-        int num = input.nextInt();
-        distinctNumbers[countDistinct++] = num;
+        // Add the matrices
+        double[][] resultMatrix = addMatrices(matrixA, matrixB);
 
-        // Read the remaining 9 numbers
-        for (int i = 1; i < 10; i++) {
-            int currentNum = input.nextInt();
-
-            // Check if the current number is already in the array
-            boolean isDuplicate = false;
-            for (int j = 0; j < countDistinct; j++) {
-                if (distinctNumbers[j] == currentNum) {
-                    isDuplicate = true;
-                    break;
-                }
+        // Display the result
+        System.out.println("The matrices are added as follows:");
+        for (double[] row : resultMatrix) {
+            for (double value : row) {
+                System.out.print(value + " ");
             }
-
-            // If it's not a duplicate, add it to the array
-            if (!isDuplicate) {
-                distinctNumbers[countDistinct++] = currentNum;
-            }
-        }
-
-        // Display the number of distinct numbers and the distinct numbers in their input order
-        System.out.println("The number of distinct numbers is " + countDistinct);
-        System.out.print("The distinct numbers are: ");
-        for (int i = 0; i < countDistinct; i++) {
-            if (i > 0) {
-                System.out.print(" "); // Add a space between distinct numbers
-            }
-            System.out.print(distinctNumbers[i]);
+            System.out.println();
         }
     }
-    
+
+    /**
+     * Adds two matrices.
+     *
+     * @param a The first matrix.
+     * @param b The second matrix.
+     * @return A new matrix containing the result of the addition.
+     */
+    public static double[][] addMatrices(double[][] a, double[][] b) {
+        int rows = a.length;
+        int cols = a[0].length;
+
+        // Create a new matrix to store the result
+        double[][] result = new double[rows][cols];
+
+        // Add corresponding elements from matrix1 and matrix2
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = a[i][j] + b[i][j];
+            }
+        }
+
+        return result;
+    }
 }
